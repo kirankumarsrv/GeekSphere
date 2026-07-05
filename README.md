@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GeekConnect MVP
 
-## Getting Started
+GeekConnect is a verified student community for building, learning, and collaborating. This repository contains a working MVP implementation of the core product loop: college-email signup, verification, profile creation, project showcase, team discovery, and a build feed.
 
-First, run the development server:
+## What is implemented
+
+- College-email signup flow with domain validation against stored colleges and allowed domains
+- One-time verification code flow for email confirmation
+- Local SQLite-backed persistence using Prisma
+- Build feed for technical posts
+- Project showcase pages and project creation form
+- Team finder and search pages
+- Admin view for colleges and moderation queue placeholder data
+- Seed endpoint for demo data
+
+## Stack
+
+- Next.js 16 + TypeScript + Tailwind CSS
+- Prisma + SQLite
+- Server actions / route handlers for data writes
+
+## Project structure
+
+- app/ — routes, pages, and API handlers
+- components/ — shared UI components
+- lib/ — database client and auth helpers
+- prisma/ — Prisma schema and migrations-ready setup
+
+## Getting started
+
+1. Install dependencies
+   ```bash
+   npm install
+   ```
+
+2. Create your local environment file
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Generate Prisma client and apply the schema
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+4. Start the development server
+   ```bash
+   npm run dev
+   ```
+
+5. Open http://localhost:3000
+
+## Seed demo data
+
+To populate sample colleges and users locally, run:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -X POST http://localhost:3000/api/seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Signup and verification flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Use a college email domain that exists in the local seed data, for example:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- aarav@rvce.edu.in
+- sana@pes.edu
 
-## Learn More
+The signup endpoint returns a verification code in the response body for local development. Enter that code on the verification step to complete signup.
 
-To learn more about Next.js, take a look at the following resources:
+## Build verification
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+```
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The current MVP uses local SQLite storage for simplicity.
+- The verification flow is intentionally lightweight for local development and can be upgraded to real email delivery later.
